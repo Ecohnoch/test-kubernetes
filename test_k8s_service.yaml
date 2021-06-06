@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-k8s
+  namespace: default
+  labels:
+    app: test-k8s
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    nodePort: 30090 #service对外开放端口
+  selector:
+    app: test-k8s
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-k8s #名称
+  labels:
+    app: test-k8s #标注
+spec:
+  replicas: 3 #运行容器的副本数，修改这里可以快速修改分布式节点数量
+  selector:
+    matchLabels:
+      app: test-k8s
+  template:
+    metadata:
+      labels:
+        app: test-k8s
+    spec:
+      containers: #docker容器的配置
+      - name: test-k8s
+        image: test-k8s # pull镜像的地址 ip:prot/dir/images:tag
+        command: [ "python", "/work/main.py" ]
+        imagePullPolicy: IfNotPresent #pull镜像时机，
+        ports:
+        - containerPort: 5000 #容器对外开放端口
