@@ -11,14 +11,14 @@ def hello():
 def set():
     key = flask.request.args.get('key')
     value = flask.request.args.get('value')
-    r = redis.Redis(host='10.109.93.175', port=6370)
+    r = redis.Redis(host='redis', port=6370)
     r.set(name=key, value=value)
     return "OK"
 
 @app.route('/get')
 def get():
     key = flask.request.args.get('key')
-    r = redis.Redis(host='10.109.93.175', port=6370)
+    r = redis.Redis(host='redis', port=6370)
     value = r.get(key)
     return value
 
