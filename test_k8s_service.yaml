@@ -31,7 +31,7 @@ spec:
     spec:
       containers: #docker容器的配置
       - name: test-k8s
-        image: test-k8s # pull镜像的地址 ip:prot/dir/images:tag
+        image: flask-app # pull镜像的地址 ip:prot/dir/images:tag
         command: [ "python", "/work/main.py" ]
         imagePullPolicy: IfNotPresent #pull镜像时机，
         ports:
